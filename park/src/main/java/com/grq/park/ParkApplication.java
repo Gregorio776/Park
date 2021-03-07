@@ -7,7 +7,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @MapperScan(basePackages = {"com.grq.park.mapper"})
 public class ParkApplication {
-
+    // main
     public static void main(String[] args) {
         SpringApplication.run(ParkApplication.class, args);
     }
