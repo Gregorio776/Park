@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: blog
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/park?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  security:
+    user:
+      name: admin
+      password: admin
+
+mqtt:
+  username: admin							# 账号
+  password: public						# 密码
+  hostUrl: tcp://localhost:1883					# mqtt连接tcp地址
+  clientId: park							# 客户端Id，每个启动的id要不同
+  defaultTopic: /park						# 默认主题
+  timeout: 100							# 超时时间
+  keepalive: 100							# 保持连接数
+
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: park #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+mybatis:
+  type-aliases-package: com.grq.park.model
+  mapper-locations: classpath:mapper/*.xml,classpath:dao/*.xml
+

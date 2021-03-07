@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grq.park.mapper.ParkMapper">
+  <resultMap id="BaseResultMap" type="com.grq.park.model.Park">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    <!--@Table park-->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
+    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
+    <result column="
+chargeInfo" jdbcType="VARCHAR" property="
+chargeinfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    ID, `name`, address, longitude, latitude, 
+chargeInfo
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    update park
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when ID = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when ID = #{item.id,jdbcType=INTEGER} then #{item.address,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="longitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when ID = #{item.id,jdbcType=INTEGER} then #{item.longitude,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="latitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when ID = #{item.id,jdbcType=INTEGER} then #{item.latitude,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="
+chargeInfo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when ID = #{item.id,jdbcType=INTEGER} then #{item.
+chargeinfo,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where ID in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    update park
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when ID = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when ID = #{item.id,jdbcType=INTEGER} then #{item.address,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="longitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.longitude != null">
+            when ID = #{item.id,jdbcType=INTEGER} then #{item.longitude,jdbcType=DECIMAL}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="latitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.latitude != null">
+            when ID = #{item.id,jdbcType=INTEGER} then #{item.latitude,jdbcType=DECIMAL}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="
+chargeInfo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.
+chargeinfo != null">
+            when ID = #{item.id,jdbcType=INTEGER} then #{item.
+chargeinfo,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where ID in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="ID" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into park
+    (`name`, address, longitude, latitude, 
+chargeInfo)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR}, #{item.longitude,jdbcType=DECIMAL}, 
+        #{item.latitude,jdbcType=DECIMAL}, #{item.
+chargeinfo,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="ID" keyProperty="id" parameterType="com.grq.park.model.Park" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into park
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      `name`,
+      address,
+      longitude,
+      latitude,
+      
+chargeInfo,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{name,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR},
+      #{longitude,jdbcType=DECIMAL},
+      #{latitude,jdbcType=DECIMAL},
+      #{
+chargeinfo,jdbcType=VARCHAR},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        ID = #{id,jdbcType=INTEGER},
+      </if>
+      `name` = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DECIMAL},
+      latitude = #{latitude,jdbcType=DECIMAL},
+      
+chargeInfo = #{
+chargeinfo,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="ID" keyProperty="id" parameterType="com.grq.park.model.Park" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into park
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="
+chargeinfo != null">
+        
+chargeInfo,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="
+chargeinfo != null">
+        #{
+chargeinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        ID = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="
+chargeinfo != null">
+        
+chargeInfo = #{
+chargeinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

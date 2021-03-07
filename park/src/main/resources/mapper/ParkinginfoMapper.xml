@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grq.park.mapper.ParkinginfoMapper">
+  <resultMap id="BaseResultMap" type="com.grq.park.model.Parkinginfo">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    <!--@Table parkinginfo-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="enter_door_id" jdbcType="INTEGER" property="enterDoorId" />
+    <result column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="enter_time" jdbcType="TIMESTAMP" property="enterTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    id, pid, enter_door_id, car_id, enter_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    update parkinginfo
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="pid = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.pid,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="enter_door_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.enterDoorId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="car_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.carId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="enter_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.enterTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    update parkinginfo
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="pid = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.pid != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.pid,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="enter_door_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.enterDoorId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.enterDoorId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="car_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.carId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.carId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="enter_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.enterTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.enterTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into parkinginfo
+    (pid, enter_door_id, car_id, enter_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.pid,jdbcType=INTEGER}, #{item.enterDoorId,jdbcType=INTEGER}, #{item.carId,jdbcType=INTEGER}, 
+        #{item.enterTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.grq.park.model.Parkinginfo" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into parkinginfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      pid,
+      enter_door_id,
+      car_id,
+      enter_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{pid,jdbcType=INTEGER},
+      #{enterDoorId,jdbcType=INTEGER},
+      #{carId,jdbcType=INTEGER},
+      #{enterTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      pid = #{pid,jdbcType=INTEGER},
+      enter_door_id = #{enterDoorId,jdbcType=INTEGER},
+      car_id = #{carId,jdbcType=INTEGER},
+      enter_time = #{enterTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.grq.park.model.Parkinginfo" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into parkinginfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="enterDoorId != null">
+        enter_door_id,
+      </if>
+      <if test="carId != null">
+        car_id,
+      </if>
+      <if test="enterTime != null">
+        enter_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="enterDoorId != null">
+        #{enterDoorId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null">
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="enterTime != null">
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="enterDoorId != null">
+        enter_door_id = #{enterDoorId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null">
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="enterTime != null">
+        enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

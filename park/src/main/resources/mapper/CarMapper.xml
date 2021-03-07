@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grq.park.mapper.CarMapper">
+  <resultMap id="BaseResultMap" type="com.grq.park.model.Car">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    <!--@Table car-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="plate" jdbcType="VARCHAR" property="plate" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    id, plate, info, `type`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    update car
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="plate = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.plate,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="info = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.info,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.type,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    update car
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="plate = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.plate != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.plate,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="info = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.info != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.info,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.type,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into car
+    (plate, info, `type`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.plate,jdbcType=VARCHAR}, #{item.info,jdbcType=VARCHAR}, #{item.type,jdbcType=INTEGER}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.grq.park.model.Car" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      plate,
+      info,
+      `type`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{plate,jdbcType=VARCHAR},
+      #{info,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      plate = #{plate,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.grq.park.model.Car" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Feb 23 16:26:19 CST 2021.-->
+    insert into car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="plate != null">
+        plate,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="plate != null">
+        #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="plate != null">
+        plate = #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
